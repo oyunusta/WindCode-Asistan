@@ -122,7 +122,7 @@ client.on("guildMemberAdd", async (member) => {
     
       message.reply(`attığın ss eğer **son video** değilse, **like**, **yorum**, **abone** yoksa ${kod}abone rolün verilmez.${kod}\nYetkililerimiz en kısa sürede ilgilenecektir. Lütfen bekleyin.`)
       const filter = (reaction, user) => {
-        return message.guild.members.cache.get(user.id).roles.cache.has("YETKILI ROL ID")&&!user.bot;
+        return message.guild.members.cache.get(user.id).roles.cache.has("935684559083823155")&&!user.bot;
       };
    
       const collector = message.createReactionCollector(filter, {});
