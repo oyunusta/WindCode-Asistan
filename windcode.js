@@ -62,6 +62,7 @@ client.login(token).then(() => console.log(chalk.bold.green("LC - Giriş başar�
     process.exit(1)
 })
 
+//karşılama
 client.on("guildMemberAdd", (member) => {
 
 message.channel.send(`
@@ -86,6 +87,7 @@ client.channels.cache.get('935638992521674792').send({embeds: [embed], component
 
 }) 
 
+//rozet rol
 let manager = new Manager(client, {
     DISCORD_EMPLOYEE: config.discordstaff,
     PARTNERED_SERVER_OWNER: config.discordpartner,
@@ -104,3 +106,45 @@ let manager = new Manager(client, {
 client.on("guildMemberAdd", async (member) => {
     await manager.setRole(member);
 });
+
+//abone sistemş
+	    client.on("message",message=>{
+	  if(message.author.bot) return false;
+
+  if(message.channel.id=="935645171528388648"){ 
+  if(message.attachments.size < 1) return false;
+  if(message.member.roles.cache.get("935684559083823155")) return false;
+  let kod = "`" 
+  
+      message.react("935706133149143050"); // EMOJİ 1
+      message.react("935706227864920105"); // EMOJİ 2
+      message.react("935705961748922389"); // EMOJİ 3
+    
+      message.reply(`attığın ss eğer **son video** değilse, **like**, **yorum**, **abone** yoksa ${kod}abone rolün verilmez.${kod}\nYetkililerimiz en kısa sürede ilgilenecektir. Lütfen bekleyin.`)
+      const filter = (reaction, user) => {
+        return message.guild.members.cache.get(user.id).roles.cache.has("YETKILI ROL ID")&&!user.bot;
+      };
+   
+      const collector = message.createReactionCollector(filter, {});
+  
+      collector.on('collect', (reaction, user) => {
+
+        if(reaction.emoji.name=="abone_tik"){ // EMOJİ 1
+		if(message.member.roles.cache.get("ABONE ROL ID")) return false;
+          message.guild.member(message.author.id).roles.add("935640395071782973")
+		  client.channels.cache.get("935704774706360380").send(`${message.author} isimli kullanıcıya ${kod}${user.tag}${kod} tarafından ${kod}ABONE${kod} rolü verildi.`); 
+          
+          
+        }else if(reaction.emoji.name=="abone_red"){ // EMOJİ 2
+          message.guild.member(message.author.id).roles.remove("935640395071782973")
+		  client.channels.cache.get("935704774706360380").send(`${message.author} isimli kullanıcının ${kod}${user.tag}${kod} tarafından ${kod}ABONE${kod} rolü alındı.`); 
+          
+          
+		}else if(reaction.emoji.name=="abone_uyari"){ // EMOJİ 3
+		  client.channels.cache.get("935704774706360380").send(`${message.author} son video like yorum ve abone gerek.`);
+
+      
+        }
+      });
+    };
+  });
